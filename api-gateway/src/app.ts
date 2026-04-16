@@ -3,6 +3,7 @@ import express from "express";
 import helmet from "helmet";
 import morgan from "morgan";
 import { getEnv } from "./config/env";
+import { requireAuth } from "./middleware/auth";
 import { errorHandler, notFound } from "./middleware/error-handler";
 import { requestId } from "./middleware/request-id";
 
@@ -18,6 +19,10 @@ export function buildApp() {
 
   app.get("/health", (_req, res) => {
     res.status(200).json({ status: "ok", service: "api-gateway" });
+  });
+
+  app.get("/models", requireAuth, (_req, res) => {
+    res.status(200).json({ models: [] });
   });
 
   app.use(notFound);
