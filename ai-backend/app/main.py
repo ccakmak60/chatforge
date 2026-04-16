@@ -4,6 +4,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 
 from app.schemas import ErrorResponse
+from app.routers.ingest import router as ingest_router
 
 app = FastAPI(title="ChatForge AI Backend", version="0.1.0")
 
@@ -42,3 +43,6 @@ async def global_exception_handler(request: Request, exc: Exception):
 @app.get("/health")
 async def health():
     return {"status": "ok"}
+
+
+app.include_router(ingest_router)
