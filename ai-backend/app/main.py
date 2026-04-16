@@ -8,6 +8,7 @@ from app.routers.ingest import router as ingest_router
 from app.routers.chat import router as chat_router
 from app.routers.finetune import router as finetune_router
 from app.routers.evaluate import router as evaluate_router
+from app.routers.models import router as models_router
 
 app = FastAPI(title="ChatForge AI Backend", version="0.1.0")
 
@@ -52,3 +53,4 @@ app.include_router(ingest_router)
 app.include_router(chat_router)
 app.include_router(finetune_router)
 app.include_router(evaluate_router)
+app.include_router(models_router)
