@@ -9,4 +9,10 @@ describe("health", () => {
     expect(res.status).toBe(200);
     expect(res.body.status).toBe("ok");
   });
+
+  it("returns x-request-id response header", async () => {
+    const app = buildApp();
+    const res = await request(app).get("/health");
+    expect(res.headers["x-request-id"]).toBeTruthy();
+  });
 });
