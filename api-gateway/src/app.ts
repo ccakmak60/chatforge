@@ -3,10 +3,9 @@ import express from "express";
 import helmet from "helmet";
 import morgan from "morgan";
 import { getEnv } from "./config/env";
-import { requireAuth } from "./middleware/auth";
 import { errorHandler, notFound } from "./middleware/error-handler";
-import { createGlobalLimiter } from "./middleware/rate-limit";
 import { requestId } from "./middleware/request-id";
+import { proxyRouter } from "./routes/proxy";
 
 export function buildApp() {
   const env = getEnv();
@@ -22,11 +21,7 @@ export function buildApp() {
     res.status(200).json({ status: "ok", service: "api-gateway" });
   });
 
-  const limiter = createGlobalLimiter();
-
-  app.get("/models", requireAuth, limiter, (_req, res) => {
-    res.status(200).json({ models: [] });
-  });
+  app.use(proxyRouter);
 
   app.use(notFound);
   app.use(errorHandler);
