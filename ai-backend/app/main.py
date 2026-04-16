@@ -5,6 +5,7 @@ from fastapi.responses import JSONResponse
 
 from app.schemas import ErrorResponse
 from app.routers.ingest import router as ingest_router
+from app.routers.chat import router as chat_router
 
 app = FastAPI(title="ChatForge AI Backend", version="0.1.0")
 
@@ -46,3 +47,4 @@ async def health():
 
 
 app.include_router(ingest_router)
+app.include_router(chat_router)
