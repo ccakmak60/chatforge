@@ -1,0 +1,30 @@
+version: "3.8"
+
+services:
+  ollama:
+    image: ollama/ollama:latest
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+
+  ai-backend:
+    build: ../ai-backend
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    depends_on:
+      - ollama
+    environment:
+      - OLLAMA_BASE_URL=http://ollama:11434
+
+  web-ui:
+    build: ../web-ui
+    ports:
+      - "3000:3000"
+    depends_on:
+      - ai-backend
+
+volumes:
+  ollama_data:
