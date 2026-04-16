@@ -37,6 +37,19 @@ A self-hostable, private, configurable domain chatbot platform.
 2. Wait for ingestion to complete
 3. Ask questions about your document in the chat
 
+### API Gateway (Phase 2 Scaffold)
+
+```bash
+cd api-gateway
+npm install
+npm run dev
+```
+
+Default URL: `http://localhost:8080`
+
+Public health: `GET /health`
+All other routes require Bearer JWT (RS256/JWKS).
+
 ### API Endpoints
 
 | Method | Path           | Description                    |

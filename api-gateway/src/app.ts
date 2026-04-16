@@ -5,7 +5,7 @@ import morgan from "morgan";
 import { getEnv } from "./config/env";
 import { errorHandler, notFound } from "./middleware/error-handler";
 import { requestId } from "./middleware/request-id";
-import { proxyRouter } from "./routes/proxy";
+import { createProxyRouter } from "./routes/proxy";
 
 export function buildApp() {
   const env = getEnv();
@@ -21,7 +21,7 @@ export function buildApp() {
     res.status(200).json({ status: "ok", service: "api-gateway" });
   });
 
-  app.use(proxyRouter);
+  app.use(createProxyRouter());
 
   app.use(notFound);
   app.use(errorHandler);

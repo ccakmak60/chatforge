@@ -2,6 +2,11 @@ import request from "supertest";
 import { describe, expect, it, vi } from "vitest";
 import { buildApp } from "../src/app";
 
+const fetchMock = vi.fn(() =>
+  Promise.resolve(new Response(JSON.stringify({ models: [] }), { status: 200 }))
+);
+vi.stubGlobal("fetch", fetchMock);
+
 vi.mock("../src/middleware/auth", () => ({
   requireAuth: (_req: unknown, _res: unknown, next: () => void) => next()
 }));

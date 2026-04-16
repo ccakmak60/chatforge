@@ -1,6 +1,10 @@
 import request from "supertest";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import { buildApp } from "../src/app";
+
+vi.mock("../src/middleware/auth", () => ({
+  requireAuth: (_req: unknown, _res: unknown, next: () => void) => next()
+}));
 
 describe("error envelope", () => {
   it("returns standard error shape", async () => {

@@ -59,6 +59,8 @@ export async function forwardSse(req: Request, res: Response, path: string) {
   res.setHeader("cache-control", "no-cache");
   res.setHeader("connection", "keep-alive");
 
-  const nodeStream = Readable.fromWeb(upstream.body as ReadableStream<Uint8Array>);
+  const nodeStream = Readable.fromWeb(
+    upstream.body as unknown as import("node:stream/web").ReadableStream
+  );
   nodeStream.pipe(res);
 }
