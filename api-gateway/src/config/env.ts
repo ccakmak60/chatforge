@@ -4,6 +4,8 @@ export interface Env {
   jwksUri: string;
   jwtIssuer: string;
   jwtAudience: string;
+  rateLimitWindowMs: number;
+  rateLimitMax: number;
 }
 
 export function getEnv(): Env {
@@ -12,6 +14,8 @@ export function getEnv(): Env {
     corsOrigin: process.env.CORS_ORIGIN ?? "http://localhost:3000",
     jwksUri: process.env.JWKS_URI ?? "",
     jwtIssuer: process.env.JWT_ISSUER ?? "",
-    jwtAudience: process.env.JWT_AUDIENCE ?? ""
+    jwtAudience: process.env.JWT_AUDIENCE ?? "",
+    rateLimitWindowMs: Number(process.env.RATE_LIMIT_WINDOW_MS ?? 60000),
+    rateLimitMax: Number(process.env.RATE_LIMIT_MAX ?? 60)
   };
 }

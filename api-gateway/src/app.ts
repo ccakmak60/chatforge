@@ -5,6 +5,7 @@ import morgan from "morgan";
 import { getEnv } from "./config/env";
 import { requireAuth } from "./middleware/auth";
 import { errorHandler, notFound } from "./middleware/error-handler";
+import { createGlobalLimiter } from "./middleware/rate-limit";
 import { requestId } from "./middleware/request-id";
 
 export function buildApp() {
@@ -21,7 +22,9 @@ export function buildApp() {
     res.status(200).json({ status: "ok", service: "api-gateway" });
   });
 
-  app.get("/models", requireAuth, (_req, res) => {
+  const limiter = createGlobalLimiter();
+
+  app.get("/models", requireAuth, limiter, (_req, res) => {
     res.status(200).json({ models: [] });
   });
 
